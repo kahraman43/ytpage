@@ -5,8 +5,317 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".MainActivity">
 
-    <!-- UI tasarımı 2. adımda yapılacak -->
-    
+    <!-- EKRAN BÖLÜMÜ: Hesaplama sonuçlarının gösterileceği alan -->
+    <TextView
+        android:id="@+id/tvDisplay"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/display_background"
+        android:gravity="end|center_vertical"
+        android:padding="24dp"
+        android:text="@string/display_default"
+        android:textColor="@color/display_text"
+        android:textSize="48sp"
+        android:textStyle="bold"
+        android:maxLines="2"
+        android:ellipsize="end"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_percent="0.25"
+        tools:text="123456" />
+
+    <!-- BUTON CONTAINER: Tüm butonları içeren alan -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/buttonContainer"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:padding="8dp"
+        app:layout_constraintTop_toBottomOf="@id/tvDisplay"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <!-- 1. SATIR: C, ÷ -->
+        <Button
+            android:id="@+id/btnClear"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_margin="4dp"
+            android:backgroundTint="@color/button_clear"
+            android:text="@string/button_clear"
+            android:textColor="@color/button_text"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/btnDivide"
+            app:layout_constraintHeight_percent="0.2"
+            app:layout_constraintWidth_percent="0.48" />
+
+        <Button
+            android:id="@+id/btnDivide"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_margin="4dp"
+            android:backgroundTint="@color/button_operator"
+            android:text="@string/button_divide"
+            android:textColor="@color/button_text"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/btnClear"
+            app:layout_constraintHeight_percent="0.2"
+            app:layout_constraintWidth_percent="0.48" />
+
+        <!-- 2. SATIR: 7, 8, 9, × -->
+        <Button
+            android:id="@+id/btn7"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_margin="4dp"
+            android:backgroundTint="@color/button_number"
+            android:text="@string/button_7"
+            android:textColor="@color/button_text"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintTop_toBottomOf="@id/btnClear"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/btn8"
+            app:layout_constraintHeight_percent="0.2"
+            app:layout_constraintWidth_percent="0.23" />
+
+        <Button
+            android:id="@+id/btn8"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_margin="4dp"
+            android:backgroundTint="@color/button_number"
+            android:text="@string/button_8"
+            android:textColor="@color/button_text"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintTop_toBottomOf="@id/btnClear"
+            app:layout_constraintStart_toEndOf="@id/btn7"
+            app:layout_constraintEnd_toStartOf="@id/btn9"
+            app:layout_constraintHeight_percent="0.2"
+            app:layout_constraintWidth_percent="0.23" />
+
+        <Button
+            android:id="@+id/btn9"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_margin="4dp"
+            android:backgroundTint="@color/button_number"
+            android:text="@string/button_9"
+            android:textColor="@color/button_text"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintTop_toBottomOf="@id/btnDivide"
+            app:layout_constraintStart_toEndOf="@id/btn8"
+            app:layout_constraintEnd_toStartOf="@id/btnMultiply"
+            app:layout_constraintHeight_percent="0.2"
+            app:layout_constraintWidth_percent="0.23" />
+
+        <Button
+            android:id="@+id/btnMultiply"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_margin="4dp"
+            android:backgroundTint="@color/button_operator"
+            android:text="@string/button_multiply"
+            android:textColor="@color/button_text"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintTop_toBottomOf="@id/btnDivide"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/btn9"
+            app:layout_constraintHeight_percent="0.2"
+            app:layout_constraintWidth_percent="0.23" />
+
+        <!-- 3. SATIR: 4, 5, 6, − -->
+        <Button
+            android:id="@+id/btn4"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_margin="4dp"
+            android:backgroundTint="@color/button_number"
+            android:text="@string/button_4"
+            android:textColor="@color/button_text"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintTop_toBottomOf="@id/btn7"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/btn5"
+            app:layout_constraintHeight_percent="0.2"
+            app:layout_constraintWidth_percent="0.23" />
+
+        <Button
+            android:id="@+id/btn5"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_margin="4dp"
+            android:backgroundTint="@color/button_number"
+            android:text="@string/button_5"
+            android:textColor="@color/button_text"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintTop_toBottomOf="@id/btn8"
+            app:layout_constraintStart_toEndOf="@id/btn4"
+            app:layout_constraintEnd_toStartOf="@id/btn6"
+            app:layout_constraintHeight_percent="0.2"
+            app:layout_constraintWidth_percent="0.23" />
+
+        <Button
+            android:id="@+id/btn6"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_margin="4dp"
+            android:backgroundTint="@color/button_number"
+            android:text="@string/button_6"
+            android:textColor="@color/button_text"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintTop_toBottomOf="@id/btn9"
+            app:layout_constraintStart_toEndOf="@id/btn5"
+            app:layout_constraintEnd_toStartOf="@id/btnSubtract"
+            app:layout_constraintHeight_percent="0.2"
+            app:layout_constraintWidth_percent="0.23" />
+
+        <Button
+            android:id="@+id/btnSubtract"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_margin="4dp"
+            android:backgroundTint="@color/button_operator"
+            android:text="@string/button_subtract"
+            android:textColor="@color/button_text"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintTop_toBottomOf="@id/btnMultiply"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/btn6"
+            app:layout_constraintHeight_percent="0.2"
+            app:layout_constraintWidth_percent="0.23" />
+
+        <!-- 4. SATIR: 1, 2, 3, + -->
+        <Button
+            android:id="@+id/btn1"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_margin="4dp"
+            android:backgroundTint="@color/button_number"
+            android:text="@string/button_1"
+            android:textColor="@color/button_text"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintTop_toBottomOf="@id/btn4"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/btn2"
+            app:layout_constraintHeight_percent="0.2"
+            app:layout_constraintWidth_percent="0.23" />
+
+        <Button
+            android:id="@+id/btn2"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_margin="4dp"
+            android:backgroundTint="@color/button_number"
+            android:text="@string/button_2"
+            android:textColor="@color/button_text"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintTop_toBottomOf="@id/btn5"
+            app:layout_constraintStart_toEndOf="@id/btn1"
+            app:layout_constraintEnd_toStartOf="@id/btn3"
+            app:layout_constraintHeight_percent="0.2"
+            app:layout_constraintWidth_percent="0.23" />
+
+        <Button
+            android:id="@+id/btn3"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_margin="4dp"
+            android:backgroundTint="@color/button_number"
+            android:text="@string/button_3"
+            android:textColor="@color/button_text"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintTop_toBottomOf="@id/btn6"
+            app:layout_constraintStart_toEndOf="@id/btn2"
+            app:layout_constraintEnd_toStartOf="@id/btnAdd"
+            app:layout_constraintHeight_percent="0.2"
+            app:layout_constraintWidth_percent="0.23" />
+
+        <Button
+            android:id="@+id/btnAdd"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_margin="4dp"
+            android:backgroundTint="@color/button_operator"
+            android:text="@string/button_add"
+            android:textColor="@color/button_text"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintTop_toBottomOf="@id/btnSubtract"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/btn3"
+            app:layout_constraintHeight_percent="0.2"
+            app:layout_constraintWidth_percent="0.23" />
+
+        <!-- 5. SATIR: 0, ., = -->
+        <Button
+            android:id="@+id/btn0"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_margin="4dp"
+            android:backgroundTint="@color/button_number"
+            android:text="@string/button_0"
+            android:textColor="@color/button_text"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintTop_toBottomOf="@id/btn1"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/btnDot"
+            app:layout_constraintWidth_percent="0.48" />
+
+        <Button
+            android:id="@+id/btnDot"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_margin="4dp"
+            android:backgroundTint="@color/button_number"
+            android:text="@string/button_dot"
+            android:textColor="@color/button_text"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintTop_toBottomOf="@id/btn2"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/btn0"
+            app:layout_constraintEnd_toStartOf="@id/btnEquals"
+            app:layout_constraintWidth_percent="0.23" />
+
+        <Button
+            android:id="@+id/btnEquals"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_margin="4dp"
+            android:backgroundTint="@color/button_equals"
+            android:text="@string/button_equals"
+            android:textColor="@color/button_text_white"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintTop_toBottomOf="@id/btnAdd"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/btnDot"
+            app:layout_constraintWidth_percent="0.23" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
