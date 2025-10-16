@@ -9,19 +9,53 @@ android {
 
     defaultConfig {
         applicationId "com.example.simplecalc"
-        minSdk 21  // Android 5.0 ve üzeri
-        targetSdk 34
+        minSdk 21  // Android 5.0 ve üzeri (Lollipop)
+        targetSdk 34  // Android 14 (En son sürüm)
         versionCode 1
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        
+        // Vektör çizimleri için compat desteği
+        vectorDrawables.useSupportLibrary = true
+    }
+
+    // İmzalama yapılandırması (keystore bilgileri)
+    signingConfigs {
+        release {
+            // UYARI: Güvenlik için bu bilgileri gradle.properties veya environment variables'da tutun
+            // Şu an için örnek yapılandırma:
+            
+            // Keystore dosyası yolu (7. adımda oluşturulacak)
+            // storeFile file("../keystore/simplecalc-release.jks")
+            // storePassword "KEYSTORE_PASSWORD"  // Şifrenizi buraya yazın
+            // keyAlias "simplecalc"
+            // keyPassword "KEY_PASSWORD"  // Key şifrenizi buraya yazın
+            
+            // NOT: Yukarıdaki satırları keystore oluşturduktan sonra aktif edin
+        }
     }
 
     buildTypes {
-        release {
+        debug {
+            // Debug build - geliştirme için
+            applicationIdSuffix ".debug"
+            versionNameSuffix "-DEBUG"
+            debuggable true
             minifyEnabled false
+        }
+        
+        release {
+            // Release build - Google Play Console için
+            minifyEnabled true  // Kod küçültme aktif
+            shrinkResources true  // Kullanılmayan kaynakları kaldır
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            // İmzalama yapılandırması buraya eklenecek
+            
+            // İmzalama (keystore oluşturduktan sonra aktif edin)
+            // signingConfig signingConfigs.release
+            
+            // APK optimizasyonu
+            crunchPngs true  // PNG dosyalarını sıkıştır
         }
     }
     
@@ -32,22 +66,44 @@ android {
     
     kotlinOptions {
         jvmTarget = '1.8'
+        
+        // Kotlin optimizasyonları
+        freeCompilerArgs += [
+            '-Xopt-in=kotlin.RequiresOptIn'
+        ]
     }
 
     buildFeatures {
         viewBinding true
+        buildConfig true  // BuildConfig sınıfı oluştur
     }
 
-    // .aab (Android App Bundle) oluşturma özelliği aktif
+    // .aab (Android App Bundle) oluşturma özellikleri
+    // Google Play Console .aab formatını tercih eder (APK yerine)
     bundle {
         language {
-            enableSplit = true
+            enableSplit = true  // Dil bazlı bölme
         }
         density {
-            enableSplit = true
+            enableSplit = true  // Ekran yoğunluğu bazlı bölme
         }
         abi {
-            enableSplit = true
+            enableSplit = true  // CPU mimarisi bazlı bölme
+        }
+    }
+    
+    // Lint kontrolleri
+    lint {
+        abortOnError false  // Lint hatası varsa build'i durdurma
+        checkReleaseBuilds true  // Release build'de lint kontrolü
+        disable 'MissingTranslation'  // Eksik çeviri uyarılarını devre dışı bırak
+    }
+    
+    // APK/AAB çıktı isimlendirmesi
+    applicationVariants.all { variant ->
+        variant.outputs.all { output ->
+            def formattedDate = new Date().format('yyyyMMdd-HHmm')
+            outputFileName = "SimpleCalc-${variant.versionName}-${variant.name}-${formattedDate}.${variant.buildType.name == 'release' ? 'aab' : 'apk'}"
         }
     }
 }
