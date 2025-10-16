@@ -1,0 +1,44 @@
+# Android Studio / IntelliJ IDEA
+*.iml
+.idea/
+.gradle/
+local.properties
+captures/
+.externalNativeBuild
+.cxx
+*.apk
+*.aab
+*.ap_
+*.dex
+
+# Gradle
+build/
+.gradle/
+gradle-app.setting
+
+# NDK
+obj/
+
+# Keystore files - GÜVENLİK İÇİN ÇOK ÖNEMLİ!
+*.jks
+*.keystore
+keystore/
+
+# Signing configs
+signing.properties
+key.properties
+
+# Local configuration
+local.properties
+
+# Log Files
+*.log
+
+# OS specific
+.DS_Store
+Thumbs.db
+
+# Backup files
+*~
+*.swp
+*.bak

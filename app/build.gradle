@@ -1,0 +1,122 @@
+plugins {
+    id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
+}
+
+android {
+    namespace 'com.example.simplecalc'
+    compileSdk 34
+
+    defaultConfig {
+        applicationId "com.example.simplecalc"
+        minSdk 21  // Android 5.0 ve üzeri (Lollipop)
+        targetSdk 34  // Android 14 (En son sürüm)
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        
+        // Vektör çizimleri için compat desteği
+        vectorDrawables.useSupportLibrary = true
+    }
+
+    // İmzalama yapılandırması (keystore bilgileri)
+    signingConfigs {
+        release {
+            // UYARI: Güvenlik için bu bilgileri gradle.properties veya environment variables'da tutun
+            // Şu an için örnek yapılandırma:
+            
+            // Keystore dosyası yolu (7. adımda oluşturulacak)
+            // storeFile file("../keystore/simplecalc-release.jks")
+            // storePassword "KEYSTORE_PASSWORD"  // Şifrenizi buraya yazın
+            // keyAlias "simplecalc"
+            // keyPassword "KEY_PASSWORD"  // Key şifrenizi buraya yazın
+            
+            // NOT: Yukarıdaki satırları keystore oluşturduktan sonra aktif edin
+        }
+    }
+
+    buildTypes {
+        debug {
+            // Debug build - geliştirme için
+            applicationIdSuffix ".debug"
+            versionNameSuffix "-DEBUG"
+            debuggable true
+            minifyEnabled false
+        }
+        
+        release {
+            // Release build - Google Play Console için
+            minifyEnabled true  // Kod küçültme aktif
+            shrinkResources true  // Kullanılmayan kaynakları kaldır
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            
+            // İmzalama (keystore oluşturduktan sonra aktif edin)
+            // signingConfig signingConfigs.release
+            
+            // APK optimizasyonu
+            crunchPngs true  // PNG dosyalarını sıkıştır
+        }
+    }
+    
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    
+    kotlinOptions {
+        jvmTarget = '1.8'
+        
+        // Kotlin optimizasyonları
+        freeCompilerArgs += [
+            '-Xopt-in=kotlin.RequiresOptIn'
+        ]
+    }
+
+    buildFeatures {
+        viewBinding true
+        buildConfig true  // BuildConfig sınıfı oluştur
+    }
+
+    // .aab (Android App Bundle) oluşturma özellikleri
+    // Google Play Console .aab formatını tercih eder (APK yerine)
+    bundle {
+        language {
+            enableSplit = true  // Dil bazlı bölme
+        }
+        density {
+            enableSplit = true  // Ekran yoğunluğu bazlı bölme
+        }
+        abi {
+            enableSplit = true  // CPU mimarisi bazlı bölme
+        }
+    }
+    
+    // Lint kontrolleri
+    lint {
+        abortOnError false  // Lint hatası varsa build'i durdurma
+        checkReleaseBuilds true  // Release build'de lint kontrolü
+        disable 'MissingTranslation'  // Eksik çeviri uyarılarını devre dışı bırak
+    }
+    
+    // APK/AAB çıktı isimlendirmesi
+    applicationVariants.all { variant ->
+        variant.outputs.all { output ->
+            def formattedDate = new Date().format('yyyyMMdd-HHmm')
+            outputFileName = "SimpleCalc-${variant.versionName}-${variant.name}-${formattedDate}.${variant.buildType.name == 'release' ? 'aab' : 'apk'}"
+        }
+    }
+}
+
+dependencies {
+    // AndroidX kütüphaneleri
+    implementation 'androidx.core:core-ktx:1.12.0'
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+    implementation 'com.google.android.material:material:1.10.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    
+    // Test kütüphaneleri
+    testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+}
