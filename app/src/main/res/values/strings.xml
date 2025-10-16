@@ -27,4 +27,8 @@
     <!-- Ekran metinleri -->
     <string name="display_default">0</string>
     <string name="error_divide_zero">Sıfıra bölünemez</string>
+    
+    <!-- Google Play Console için açıklamalar -->
+    <string name="app_description">Basit ve kullanışlı hesap makinesi uygulaması. Toplama, çıkarma, çarpma ve bölme işlemlerini yapabilirsiniz.</string>
+    <string name="app_short_description">Basit hesap makinesi</string>
 </resources>
